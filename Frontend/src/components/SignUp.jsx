@@ -16,17 +16,46 @@ import {
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../atoms/authAtom";
+import useShowToast from "../hooks/useShowToast";
+import userAtom from "../atoms/userAtom";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const showToast = useShowToast();
   const setAuthScreen = useSetRecoilState(authScreenAtom);
-
+  const setUser = useSetRecoilState(userAtom);
+  const [inputs, setInputs] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  const handleSignup = async () => {
+    try {
+      console.log(inputs);
+      const res = await fetch("/api/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+      const data = await res.json();
+      if (data.error) {
+        showToast("Error", data.error, "error");
+      }
+      console.log(data);
+      localStorage.setItem("user-threads", JSON.stringify(data));
+      setUser(data);
+    } catch (error) {
+      showToast("Error", error, "error");
+    }
+  };
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center">
       <Stack
@@ -43,27 +72,48 @@ const SignUp = () => {
               backgroundColor="shreya.100"
               boxShadow="md">
               <FormControl>
-                <Flex gap={3}>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <CFaUserAlt color="shreya.light" />
-                    </InputLeftElement>
-                    <Input type="text" placeholder="First Name" />
-                  </InputGroup>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <CFaUserAlt color="shreya.light" />
-                    </InputLeftElement>
-                    <Input type="text" placeholder="Last Name" />
-                  </InputGroup>
-                </Flex>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <CFaUserAlt color="shreya.light" />
+                  </InputLeftElement>
+                  <Input
+                    type="text"
+                    onChange={(e) =>
+                      setInputs({ ...inputs, name: e.target.value })
+                    }
+                    value={inputs.name}
+                    placeholder="Full Name"
+                  />
+                </InputGroup>
               </FormControl>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <CFaUserAlt color="shreya.light" />
                   </InputLeftElement>
-                  <Input type="email" placeholder="Email address" />
+                  <Input
+                    type="text"
+                    onChange={(e) =>
+                      setInputs({ ...inputs, username: e.target.value })
+                    }
+                    value={inputs.username}
+                    placeholder="Username"
+                  />
+                </InputGroup>
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <CFaUserAlt color="shreya.light" />
+                  </InputLeftElement>
+                  <Input
+                    type="email"
+                    onChange={(e) =>
+                      setInputs({ ...inputs, email: e.target.value })
+                    }
+                    value={inputs.email}
+                    placeholder="Email address"
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -73,6 +123,10 @@ const SignUp = () => {
                   </InputLeftElement>
                   <Input
                     type={showPassword ? "text" : "password"}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, password: e.target.value })
+                    }
+                    value={inputs.password}
                     placeholder="Password"
                   />
                   <InputRightElement width="4.5rem">
@@ -86,8 +140,9 @@ const SignUp = () => {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                width="full">
-                Login
+                width="full"
+                onClick={handleSignup}>
+                Signup
               </Button>
             </Stack>
           </form>

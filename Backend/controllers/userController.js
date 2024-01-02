@@ -38,7 +38,7 @@ const signUpUser = async (req, res) => {
       const errorMessage = `User with ${existingFields.join(
         " and "
       )} already exists`;
-      return res.status(400).json({ message: errorMessage });
+      return res.status(400).json({ error: errorMessage });
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -65,10 +65,10 @@ const signUpUser = async (req, res) => {
         createdAt: newUser.createdAt,
       });
     } else {
-      res.status(400).json({ message: "Invalid User daetails" });
+      res.status(400).json({ error: "Invalid User daetails" });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -79,11 +79,11 @@ const logInUser = async (req, res) => {
     if (user) {
       const isPasswordCorrect = await bcrypt.compare(password, user?.password);
       if (!isPasswordCorrect) {
-        return res.status(400).json({ message: "Invalid password" });
+        return res.status(400).json({ error: "Invalid password" });
       }
     }
     if (!user) {
-      return res.status(400).json({ message: "Invalid Username" });
+      return res.status(400).json({ error: "Invalid Username" });
     }
     generateTokenSetCookies(user._id, res);
     res.status(200).json({
@@ -99,7 +99,7 @@ const logInUser = async (req, res) => {
       createdAt: user.createdAt,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 

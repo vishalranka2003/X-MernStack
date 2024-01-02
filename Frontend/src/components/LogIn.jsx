@@ -17,6 +17,8 @@ import {
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../atoms/authAtom";
+import useShowToast from "../hooks/useShowToast";
+import userAtom from "../atoms/userAtom";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -25,6 +27,35 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
   const handleShowClick = () => setShowPassword(!showPassword);
+  const showToast = useShowToast();
+  const setUser = useSetRecoilState(userAtom);
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    //  setLoading(true);
+    try {
+      const res = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.error) {
+        showToast("Error", data.error, "error");
+        return;
+      }
+      localStorage.setItem("user-threads", JSON.stringify(data));
+      setUser(data);
+    } catch (error) {
+      showToast("Error", error, "error");
+    }
+  };
 
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center">
@@ -46,7 +77,15 @@ const LogIn = () => {
                   <InputLeftElement pointerEvents="none">
                     <CFaUserAlt color="shreya.light" />
                   </InputLeftElement>
-                  <Input type="email" placeholder="Email address" />
+                  <Input
+                    type="text"
+                    placeholder="Email/Username"
+                    autoComplete="username"
+                    onChange={(e) =>
+                      setInputs({ ...inputs, username: e.target.value })
+                    }
+                    value={inputs.username}
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -56,7 +95,12 @@ const LogIn = () => {
                   </InputLeftElement>
                   <Input
                     type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
                     placeholder="Password"
+                    onChange={(e) =>
+                      setInputs({ ...inputs, password: e.target.value })
+                    }
+                    value={inputs.password}
                   />
                   <InputRightElement width="4.5rem">
                     <Button h="1.75rem" size="sm" onClick={handleShowClick}>
@@ -72,7 +116,8 @@ const LogIn = () => {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                width="full">
+                width="full"
+                onClick={handleLogin}>
                 Login
               </Button>
             </Stack>
