@@ -12,16 +12,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/auth",
-      "dest": "/index.html"
+      "src": "/(.*)",
+      "dest": "/dist/index.html"
     },
     {
       "src": "/(.*)",
