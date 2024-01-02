@@ -16,6 +16,10 @@
       "dest": "/dist/index.html"
     },
     {
+      "src": "/",
+      "dest": "/dist/index.html"
+    },
+    {
       "src": "/auth",
       "dest": "/dist/index.html"
     },
