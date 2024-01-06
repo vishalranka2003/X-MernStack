@@ -43,8 +43,8 @@ const UserHeader = () => {
               <Text fontSize={"sm"}>markzuckerberg</Text>
               <Text
                 fontSize={"xs"}
-                bg={"shreya.dark"}
-                color={"shreya.light"}
+                bg={"gray.dark"}
+                color={"gray.light"}
                 p={1}
                 borderRadius={"full"}>
                 threads.net
@@ -66,9 +66,9 @@ const UserHeader = () => {
         </Text>
         <Flex w={"full"} justifyContent={"space-between"}>
           <Flex alignItems={"center"} gap={2}>
-            <Text color={"shreya.light"}>3.2K followers</Text>
-            <Box borderRadius={"50%"} w="1" h="1" bg={"shreya.light"}></Box>
-            <Link src href="https://instagram.com/mzuck" color={"shreya.light"}>
+            <Text color={"gray.light"}>3.2K followers</Text>
+            <Box borderRadius={"50%"} w="1" h="1" bg={"gray.light"}></Box>
+            <Link src href="https://instagram.com/mzuck" color={"gray.light"}>
               instagram.com
             </Link>
           </Flex>
@@ -82,9 +82,9 @@ const UserHeader = () => {
                   <CgMoreO size={24} cursor={"pointer"} />
                 </MenuButton>
                 <Portal>
-                  <MenuList bg={"shreya.dark"}>
+                  <MenuList bg={"gray.dark"}>
                     {/* MenuItems are not rendered unless Menu is open */}
-                    <MenuItem bg={"shreya.dark"} onClick={copyURL}>
+                    <MenuItem bg={"gray.dark"} onClick={copyURL}>
                       Copy Link
                     </MenuItem>
                   </MenuList>
@@ -105,7 +105,7 @@ const UserHeader = () => {
             flex={1}
             justifyContent={"center"}
             borderBottom={"2px solid #616161"}
-            color={"shreya.light"}
+            color={"gray.light"}
             pb="3">
             Replies
           </Flex>

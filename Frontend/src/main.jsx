@@ -1,4 +1,4 @@
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot } from "recoil";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
@@ -9,8 +9,8 @@ import { mode } from "@chakra-ui/theme-tools";
 const styles = {
   global: (props) => ({
     body: {
-      color: mode("shreya.800", "whiteAlpha.900")(props),
-      bg: mode("shreya.100", "#101010")(props),
+      color: mode("gray.800", "whiteAlpha.900")(props),
+      bg: mode("gray.100", "#101010")(props),
     },
   }),
 };
@@ -20,7 +20,7 @@ const config = {
 };
 
 const colors = {
-  shreya: {
+  gray: {
     light: "#616161",
     dark: "#1e1e1e",
   },

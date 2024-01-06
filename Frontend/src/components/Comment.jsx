@@ -18,17 +18,17 @@ const Comment = ({ username, comment, avatar, likes, createdBefore }) => {
             <Text fontSize={"sm"} fontWeight={"bold"}>
               {username}
             </Text>
-            <Text fontSize={"sm"} color={"shreya.light"}>
+            <Text fontSize={"sm"} color={"gray.light"}>
               {comment}
             </Text>
             <Actions liked={liked} setLiked={setLiked}></Actions>
-            <Text color={"shreya.light"} fontSize={"sm"}>
+            <Text color={"gray.light"} fontSize={"sm"}>
               {likes + (liked ? 1 : 0)} likes
             </Text>
           </Flex>
         </Flex>
         <Flex gap={3} alignItems={"center"}>
-          <Text color={"shreya.light"} fontSize={"sm"}>
+          <Text color={"gray.light"} fontSize={"sm"}>
             {createdBefore} d
           </Text>
           <BsThreeDots />

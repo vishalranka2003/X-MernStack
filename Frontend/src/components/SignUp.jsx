@@ -63,18 +63,18 @@ const SignUp = () => {
         mb="2"
         justifyContent="center"
         alignItems="center">
-        <Heading color="shreya.400">Signup</Heading>
+        <Heading color="gray.400">Signup</Heading>
         <Box w={{ base: "90%", md: "468px" }}>
           <form>
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor="shreya.100"
+              backgroundColor="gray.100"
               boxShadow="md">
               <FormControl>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <CFaUserAlt color="shreya.light" />
+                    <CFaUserAlt color="gray.light" />
                   </InputLeftElement>
                   <Input
                     type="text"
@@ -89,7 +89,7 @@ const SignUp = () => {
               <FormControl>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <CFaUserAlt color="shreya.light" />
+                    <CFaUserAlt color="gray.light" />
                   </InputLeftElement>
                   <Input
                     type="text"
@@ -104,7 +104,7 @@ const SignUp = () => {
               <FormControl>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <CFaUserAlt color="shreya.light" />
+                    <CFaUserAlt color="gray.light" />
                   </InputLeftElement>
                   <Input
                     type="email"
@@ -119,7 +119,7 @@ const SignUp = () => {
               <FormControl>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <CFaLock color="shreya.light" />
+                    <CFaLock color="gray.light" />
                   </InputLeftElement>
                   <Input
                     type={showPassword ? "text" : "password"}
@@ -151,7 +151,7 @@ const SignUp = () => {
       <Box>
         Already have an account?{" "}
         <Link
-          color="shreya.light"
+          color="gray.light"
           href="#"
           onClick={() => setAuthScreen("login")}>
           Login

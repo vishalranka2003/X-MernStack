@@ -10,7 +10,7 @@ const UserPost = ({ likes, replies, postTitle, postImg }) => {
       <Flex gap={3} mb={4} py={5}>
         <Flex flexDirection={"column"} alignItems={"center"}>
           <Avatar size="md" name="Vishal Ranka" src="/zuck-avatar.png"></Avatar>
-          <Box w="1px" h={"full"} bg="shreya.light" my={"2"}></Box>
+          <Box w="1px" h={"full"} bg="gray.light" my={"2"}></Box>
           <Box position={"relative"} w={"full"}>
             <Avatar
               size={"xs"}
@@ -50,7 +50,7 @@ const UserPost = ({ likes, replies, postTitle, postImg }) => {
               <Image src={"/verified.png"} w="4" h="4" ml={"1"}></Image>
             </Flex>
             <Flex gap={4} alignItems={"center"}>
-              <Text fontStyle={"sm"} color={"shreya.light"}>
+              <Text fontStyle={"sm"} color={"gray.light"}>
                 1d
               </Text>
               <bsThreeDots />
@@ -62,7 +62,7 @@ const UserPost = ({ likes, replies, postTitle, postImg }) => {
               borderRadius={"6"}
               overflow={"hidden"}
               border={"1px solid"}
-              borderColor={"shreya.light"}>
+              borderColor={"gray.light"}>
               <Image src={postImg}></Image>
             </Box>
           )}
@@ -70,16 +70,16 @@ const UserPost = ({ likes, replies, postTitle, postImg }) => {
             <Actions liked={liked} setLiked={setLiked} />
           </Flex>
           <Flex gap={"2"} alignItems={"center"}>
-            <Text color={"shreya.light"} fontSize={"sm"}>
+            <Text color={"gray.light"} fontSize={"sm"}>
               {replies} replies
             </Text>
             <Box
               w={"1"}
               h={"1"}
               borderRadius={"50%"}
-              background={"shreya.light"}
+              background={"gray.light"}
             />
-            <Text color={"shreya.light"} fontSize={"sm"}>
+            <Text color={"gray.light"} fontSize={"sm"}>
               {likes} likes
             </Text>
           </Flex>
