@@ -70,7 +70,7 @@ const LogIn = () => {
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor="gray.100"
+              // backgroundColor="gray.100"
               boxShadow="md">
               <FormControl>
                 <InputGroup>

@@ -4,6 +4,7 @@ import UserPage from "./pages/Userpage";
 import PostPage from "./pages/PostPage";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
+import UpdateProfilePage from "./pages/UpdateProfilePage";
 import Header from "./components/Header";
 import { useRecoilValue } from "recoil";
 import userAtom from "./atoms/userAtom";
@@ -17,12 +18,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
+            path="/"
+            element={user ? <HomePage /> : <Navigate to="/auth" />}
+          />
+          <Route
             path="/auth"
             element={!user ? <AuthPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/"
-            element={user ? <HomePage /> : <Navigate to="/auth" />}
+            path="/update"
+            element={user ? <UpdateProfilePage /> : <Navigate to="/auth" />}
           />
           <Route path="/:username" element={<UserPage />} />
           <Route path="/:username/post/:pid" element={<PostPage />} />
