@@ -19,6 +19,7 @@ import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../atoms/authAtom";
 import useShowToast from "../hooks/useShowToast";
 import userAtom from "../atoms/userAtom";
+import { useColorModeValue } from "@chakra-ui/react";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -65,7 +66,9 @@ const LogIn = () => {
         justifyContent="center"
         alignItems="center">
         <Heading color="gray.400">Login</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
+        <Box
+          minW={{ base: "90%", md: "468px" }}
+          bg={useColorModeValue("white", "gray.dark")}>
           <form>
             <Stack
               spacing={4}
