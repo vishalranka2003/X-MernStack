@@ -22,14 +22,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
-app.use(express.static(path.resolve(__dirname, "dist")));
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
-app.use("/", (req, res) => {
-  res.send("Hi");
-});
-
+// app.use("/", (req, res) => {
+//   res.send("Hi");
+// });
+app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+app.get;
+"*",
+  function (req, res) {
+    res.sendFile(path.join(__dirname, "../Frontend/dist", "index.html"));
+  };
 app.listen(PORT, () => {
   console.log("Your server is started at http://localhost:" + PORT);
 });
