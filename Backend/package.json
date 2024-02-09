@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "node server.js",
+    "start": "node server.js",
+    "install": "cd Backend && npm i && cd ../Frontend && npm i",
+    "build": "cd Frontend && npm run build",
+    "render-build": "npm install && npm run build"
   },
   "type": "module",
   "keywords": [],
