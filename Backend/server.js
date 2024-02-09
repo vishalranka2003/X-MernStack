@@ -25,9 +25,6 @@ app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
-app.use("/", (req, res) => {
-  res.send("Hi");
-});
 app.use(express.static(path.join(__dirname, "../Frontend/dist")));
 app.get;
 "*",
