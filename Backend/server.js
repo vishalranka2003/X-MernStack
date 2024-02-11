@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 import connectDB from "./db/connectDB.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
@@ -16,6 +16,11 @@ const __dirname = dirname(__filename);
 connectDB();
 
 const PORT = process.env.PORT || 5000;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 const app = express();
 
 app.use(express.json());

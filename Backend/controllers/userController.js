@@ -1,7 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateTokenSetCookies from "../utils/helpers/generateTokenSetCookies.js";
-
+import { v2 as cloudinary } from "cloudinary";
 const getUserProfile = async (req, res) => {
   const { username } = req.params;
   try {
@@ -25,6 +25,12 @@ const getUserProfile = async (req, res) => {
 const signUpUser = async (req, res) => {
   try {
     const { name, email, username, password } = req.body;
+
+    // Check if password is empty or contains only whitespace
+    if (!password.trim()) {
+      return res.status(400).json({ error: "Password cannot be empty" });
+    }
+
     const user = await User.findOne({ $or: [{ email }, { username }] });
 
     if (user) {
@@ -40,6 +46,7 @@ const signUpUser = async (req, res) => {
       )} already exists`;
       return res.status(400).json({ error: errorMessage });
     }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const newUser = new User({
@@ -48,6 +55,7 @@ const signUpUser = async (req, res) => {
       username,
       password: hashedPassword,
     });
+
     await newUser.save();
 
     if (newUser) {
@@ -57,7 +65,7 @@ const signUpUser = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         username: newUser.username,
-        profilePic: newUser.profilePic, 
+        profilePic: newUser.profilePic,
         // followers: newUser.followers,
         // following: newUser.following,
         bio: newUser.bio,
@@ -65,7 +73,7 @@ const signUpUser = async (req, res) => {
         createdAt: newUser.createdAt,
       });
     } else {
-      res.status(400).json({ error: "Invalid User daetails" });
+      res.status(400).json({ error: "Invalid User details" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -147,7 +155,8 @@ const followUnFollowUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { email, name, username, bio, profilePic, password } = req.body;
+  const { email, name, username, bio, password } = req.body;
+  let { profilePic } = req.body;
   console.log(username);
   const userId = req.user._id;
   try {
@@ -161,6 +170,12 @@ const updateUser = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       user.password = hashedPassword;
+    }
+    if (profilePic) {
+      const uploadedResponse = await cloudinary.uploader.upload(profilePic, {
+        upload_preset: "socialMedia",
+      });
+      user.profilePic = uploadedResponse.url;
     }
     user.name = name || user.name;
     user.email = email || user.email;
