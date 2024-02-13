@@ -1,5 +1,4 @@
 import { RecoilRoot } from "recoil";
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
@@ -28,12 +27,12 @@ const colors = {
 const theme = extendTheme({ config, styles, colors });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode="{theme.config.initialColorMode}"></ColorModeScript>
-        <App />
-      </ChakraProvider>
-    </RecoilRoot>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <RecoilRoot>
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode="{theme.config.initialColorMode}"></ColorModeScript>
+      <App />
+    </ChakraProvider>
+  </RecoilRoot>
+  // </React.StrictMode>
 );

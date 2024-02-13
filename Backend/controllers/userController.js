@@ -15,7 +15,7 @@ const getUserProfile = async (req, res) => {
         .status(400)
         .json({ error: "User with given username not found" });
 
-    res.status(200).json({ user });
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
     console.log("Error in UpdateUser: ", err.message);
@@ -155,38 +155,63 @@ const followUnFollowUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { email, name, username, bio, password } = req.body;
+  const { name, email, username, password, bio } = req.body;
   let { profilePic } = req.body;
-  console.log(username);
+
   const userId = req.user._id;
   try {
     let user = await User.findById(userId);
+    if (!user) return res.status(400).json({ error: "User not found" });
 
     if (req.params.id !== userId.toString())
-      return res.status(400).json({ error: "U cant update others profiel" });
-    if (!user)
-      return res.status(400).json({ error: "User with given id not found" });
+      return res
+        .status(400)
+        .json({ error: "You cannot update other user's profile" });
+
     if (password) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       user.password = hashedPassword;
     }
+
     if (profilePic) {
+      if (user.profilePic) {
+        await cloudinary.uploader.destroy(
+          user.profilePic.split("/").pop().split(".")[0]
+        );
+      }
+
       const uploadedResponse = await cloudinary.uploader.upload(profilePic, {
-        upload_preset: "socialMedia",
+        maxFileSize: 5000000, // 5MB
       });
-      user.profilePic = uploadedResponse.url;
+      profilePic = uploadedResponse.secure_url;
     }
+
     user.name = name || user.name;
     user.email = email || user.email;
     user.username = username || user.username;
     user.profilePic = profilePic || user.profilePic;
     user.bio = bio || user.bio;
+
     user = await user.save();
-    res.status(200).json({ message: "User details updated sucessfully", user });
+
+    // await Post.updateMany(
+    //   { "replies.userId": userId },
+    //   {
+    //     $set: {
+    //       "replies.$[reply].username": user.username,
+    //       "replies.$[reply].userProfilePic": user.profilePic,
+    //     },
+    //   },
+    //   { arrayFilters: [{ "reply.userId": userId }] }
+    // );
+    // password should be null in response
+    user.password = null;
+
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
-    console.log("Error in UpdateUser: ", err.message);
+    console.log("Error in updateUser: ", err.message);
   }
 };
 
