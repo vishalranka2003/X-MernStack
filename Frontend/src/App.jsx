@@ -1,5 +1,10 @@
 import { Container } from "@chakra-ui/react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import UserPage from "./pages/Userpage";
 import PostPage from "./pages/PostPage";
 import HomePage from "./pages/HomePage";
@@ -15,7 +20,7 @@ function App() {
   return (
     <Container maxW={"600px"}>
       <Header />
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route
             path="/"
@@ -32,7 +37,7 @@ function App() {
           <Route path="/:username" element={<UserPage />} />
           <Route path="/:username/post/:pid" element={<PostPage />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
       {user && <LogOutButton />}
     </Container>
   );

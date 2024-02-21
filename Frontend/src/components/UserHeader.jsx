@@ -16,7 +16,7 @@ import {
 import { BsInstagram } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import React, { useState } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import {  useRecoilValue } from "recoil";
 
 import userAtom from "../atoms/userAtom";
 import { Link as RouterLink } from "react-router-dom";
@@ -125,6 +125,7 @@ const UserHeader = ({ user }) => {
         <Flex w={"full"} justifyContent={"space-between"}>
           <Flex alignItems={"center"} gap={2}>
             <Text color={"gray.light"}>{user.followers.length} followers</Text>
+            <Text color={"gray.light"}>{user.following.length} following</Text>
             <Box borderRadius={"50%"} w="1" h="1" bg={"gray.light"}></Box>
             <Link src href="https://instagram.com/mzuck" color={"gray.light"}>
               instagram.com

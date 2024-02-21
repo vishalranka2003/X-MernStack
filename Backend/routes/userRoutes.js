@@ -10,7 +10,7 @@ import {
 import protectRoute from "../middlewares/protectRoutes.js";
 const router = express.Router();
 
-router.get("/profile/:username", getUserProfile);
+router.get("/profile/:query", getUserProfile);
 router.post("/signup", signUpUser);
 router.post("/login", logInUser);
 router.post("/logout", logOutUser);

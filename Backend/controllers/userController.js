@@ -2,14 +2,23 @@ import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateTokenSetCookies from "../utils/helpers/generateTokenSetCookies.js";
 import { v2 as cloudinary } from "cloudinary";
+import mongoose from "mongoose";
 const getUserProfile = async (req, res) => {
-  const { username } = req.params;
+  const { query } = req.params;
+  // get user profile by username or userId
   try {
-    // Get user by username from database
-    const user = await User.findOne({ username: username })
-      .select("-password")
-      .select("-updatedAt")
-      .select("-createdAt");
+    let user;
+    // query is userId
+    if (mongoose.Types.ObjectId.isValid(query)) {
+      user = await User.findOne({ _id: query })
+        .select("-password")
+        .select("-updatedAt");
+    } else {
+      // query is username
+      user = await User.findOne({ username: query })
+        .select("-password")
+        .select("-updatedAt");
+    }
     if (!user)
       return res
         .status(400)

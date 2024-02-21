@@ -34,9 +34,10 @@ const LogIn = () => {
     username: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
-    //  setLoading(true);
+    setLoading(true);
     try {
       const res = await fetch("/api/users/login", {
         method: "POST",
@@ -55,6 +56,8 @@ const LogIn = () => {
       setUser(data);
     } catch (error) {
       showToast("Error", error, "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,6 +122,8 @@ const LogIn = () => {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
+                loadingText={"LoggingIn"}
+                isLoading={loading}
                 width="full"
                 onClick={handleLogin}>
                 Login

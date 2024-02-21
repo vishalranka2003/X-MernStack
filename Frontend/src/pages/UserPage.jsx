@@ -1,13 +1,15 @@
 import { useParams } from "react-router-dom";
 import UserHeader from "../components/UserHeader";
 import UserPost from "../components/UserPost";
-import CreatePost from "../components/CreatePost";
+// import CreatePost from "../components/CreatePost";
 import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast";
+import { Flex, Spinner } from "@chakra-ui/react";
 
 const Userpage = () => {
   const [user, setUser] = useState(null);
   const { username } = useParams();
+  const [loading, setLoading] = useState(true);
   // console.log(username);
   const showToast = useShowToast();
   useEffect(() => {
@@ -15,26 +17,41 @@ const Userpage = () => {
       try {
         const res = await fetch(`/api/users/profile/${username}`);
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         if (data.error) {
           showToast("Error", data.error, "error");
           return;
         }
         setUser(data);
-        console.log("Hi");
+        // console.log("Hi");
       } catch (error) {
         showToast("Error", error.message, "error");
+      } finally {
+        setLoading(false);
       }
     };
     getUser();
-    console.log(user);
-  }, [username, showToast]);
-  if (!user) return null;
+    // console.log(user);
+  }, [user, username, showToast]);
+
+  if (!user && loading) {
+    return (
+      <Flex justifyContent={"center"}>
+        <Spinner size={"xl"} />
+      </Flex>
+    );
+  }
+  if (!user && !loading)
+    return (
+      <Flex justifyContent={"center"}>
+        <h1>User not found</h1>
+      </Flex>
+    );
 
   return (
     <>
       <UserHeader user={user} />
-      <CreatePost></CreatePost>
+
       <UserPost
         likes={"1200"}
         replies={"2000"}

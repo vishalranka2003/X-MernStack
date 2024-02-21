@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, useColorModeValue } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import useShowToast from "../hooks/useShowToast";
@@ -28,6 +28,7 @@ const LogOutButton = () => {
   };
   return (
     <Button
+      bg={useColorModeValue("gray.300", "gray.dark")}
       position={"fixed"}
       right={"30px"}
       top={"30px"}
